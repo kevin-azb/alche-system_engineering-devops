@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Bash script to update the current state of the server
 
-apt-get -y update
-apt-get install -y nginx
-echo "Holberton School for the win!" > /var/www/html/index.html
+sudo apt-get -y update
+sudo apt-get install -y nginx
+
 echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
 echo "server {
         listen 80 default_server;
@@ -19,7 +19,7 @@ echo "server {
         }
 
         location / {
-                try_files $uri $uri/ =404;
+                try_files \$uri \$uri/ =404;
         }
 
         error_page 404 /custom_404.html;
@@ -28,5 +28,6 @@ echo "server {
                 internal;
         }
 }" > /etc/nginx/sites-available/default
+
 sudo service nginx restart
 sudo service nginx reload
