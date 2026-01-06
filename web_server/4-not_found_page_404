@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Bash script to update the current state of the server
+
+apt-get -y update
+apt-get install -y nginx
+echo "Holberton School for the win!" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+echo "server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location /redirect_me {
+                return 301 https://github.com/kevin-azb;
+        }
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        error_page 404 /custom_404.html;
+
+        location = /custom_404.html {
+                internal;
+        }
+}" > /etc/nginx/sites-available/default
+sudo service nginx restart
