@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Bash script to update package list and install nginx
+apt-get update -y
+apt-get install nginx -y
+echo "Holberton School for the win!" > /var/www/html/index.html
