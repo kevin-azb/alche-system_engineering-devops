@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# Bash script to update the current state of the server
-
-sudo apt-get -y update
-sudo apt-get install -y nginx
-
-echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+# Configures Nginx with a custom 404 page that contains "Ceci n'est pas une page"
+sudo apt update -y
+sudo apt install nginx -y
+echo "Ceci n'est pas une page" > /var/www/html/404.html
 echo "server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -22,12 +20,11 @@ echo "server {
                 try_files \$uri \$uri/ =404;
         }
 
-        error_page 404 /custom_404.html;
+        error_page 404 /404.html;
 
-        location = /custom_404.html {
+        location = /404.html {
                 internal;
         }
 }" > /etc/nginx/sites-available/default
-
 sudo service nginx restart
 sudo service nginx reload
